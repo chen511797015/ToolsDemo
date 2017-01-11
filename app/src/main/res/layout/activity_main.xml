@@ -7,9 +7,10 @@
     android:orientation="vertical">
 
     <android.support.design.widget.TabLayout
+        android:id="@+id/tb_main"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:background="#ffffff"
+        android:background="#e1e1e1"
         app:tabIndicatorColor="#66ff33"
         app:tabIndicatorHeight="20dp"
         app:tabMode="scrollable">
@@ -18,21 +19,12 @@
 
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/vp_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
     </android.support.v4.view.ViewPager>
-
-    <RadioGroup
-        android:id="@+id/rg_main"
-        android:layout_width="match_parent"
-        android:layout_height="72dp">
-
-        
-
-
-    </RadioGroup>
 
 
 </LinearLayout>
