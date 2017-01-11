@@ -1,16 +1,13 @@
 package cn.pax.toolsdemo.base;
 
-
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by chendd on 2017/1/10.
+ * Created by chendd on 2017/1/11.
  */
 
-public abstract class BaseActivity extends Activity {
-
-
+public abstract class BaseAppCompatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,4 +32,5 @@ public abstract class BaseActivity extends Activity {
     protected abstract void initEvent();
 
     protected abstract void init();
+
 }
