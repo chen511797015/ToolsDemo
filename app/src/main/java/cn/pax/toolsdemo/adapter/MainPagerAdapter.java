@@ -1,5 +1,6 @@
 package cn.pax.toolsdemo.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,7 +17,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     List<Fragment> mList;
 
-    String[] mData = {"控件", "Usb设备", "框架", "自定义"};
+    String[] mData = {"系统", "控件", "Usb设备", "框架", "自定义"};
 
 
     public MainPagerAdapter(FragmentManager fm, List<Fragment> mList) {

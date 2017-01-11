@@ -5,15 +5,13 @@ import cn.pax.toolsdemo.base.BaseFragment;
 
 /**
  * Created by chendd on 2017/1/11.
- * 用于管理usb设备信息
+ * 用于管理系统设备
  */
 
-public class UsbFragment extends BaseFragment {
-    private static final String TAG = "UsbFragment";
-
+public class SystemFragment extends BaseFragment {
     @Override
     protected int setView() {
-        return R.layout.fragment_usb;
+        return R.layout.fragment_system;
     }
 
     @Override

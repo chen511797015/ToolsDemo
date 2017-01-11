@@ -17,6 +17,7 @@ import cn.pax.toolsdemo.R;
 import cn.pax.toolsdemo.adapter.MainPagerAdapter;
 import cn.pax.toolsdemo.fragment.CustomFragment;
 import cn.pax.toolsdemo.fragment.FrameFragment;
+import cn.pax.toolsdemo.fragment.SystemFragment;
 import cn.pax.toolsdemo.fragment.UsbFragment;
 import cn.pax.toolsdemo.fragment.WidgetFragment;
 
@@ -27,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     TabLayout mTabLayout;
     @BindView(R.id.vp_main)
     ViewPager mViewPager;
-
 
     List<Fragment> mFragmentList;
     MainPagerAdapter mAdapter;
@@ -49,10 +49,13 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
 
         mFragmentList = new ArrayList<>();
+        SystemFragment mSystemFragment = new SystemFragment();
         WidgetFragment mWidgetFragment = new WidgetFragment();
         UsbFragment mUsbFragment = new UsbFragment();
         FrameFragment mFrameFragment = new FrameFragment();
         CustomFragment mCustomFragment = new CustomFragment();
+
+        mFragmentList.add(mSystemFragment);
         mFragmentList.add(mWidgetFragment);
         mFragmentList.add(mUsbFragment);
         mFragmentList.add(mFrameFragment);
