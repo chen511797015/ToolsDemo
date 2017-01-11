@@ -18,5 +18,10 @@
         android:layout_height="wrap_content"
         android:text="扫码内容" />
 
+    <ImageView
+        android:id="@+id/iv_camera_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

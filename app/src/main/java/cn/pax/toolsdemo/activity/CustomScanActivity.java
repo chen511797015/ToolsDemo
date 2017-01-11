@@ -51,6 +51,9 @@ public class CustomScanActivity extends BaseAppCompatActivity implements Decorat
     @Override
     protected void initView() {
 
+        //设置下方的提示信息
+        mDBV.setStatusText("please");
+
     }
 
     @Override
