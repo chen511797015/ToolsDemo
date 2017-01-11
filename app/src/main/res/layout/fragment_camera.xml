@@ -5,10 +5,18 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
+    <Button
+        android:id="@+id/btn_camera_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="二维码"
-        android:textSize="30sp" />
+        android:text="点击扫描" />
+
+
+    <TextView
+        android:id="@+id/tv_camera_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="扫码内容" />
+
 
 </LinearLayout>
