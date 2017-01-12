@@ -10,6 +10,8 @@ import android.os.Bundle;
 
 public abstract class BaseActivity extends Activity {
 
+    public String TAG = this.getClass().getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

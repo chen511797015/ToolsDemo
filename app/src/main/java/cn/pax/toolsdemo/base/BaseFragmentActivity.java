@@ -13,6 +13,7 @@ import android.view.View;
 
 public class BaseFragmentActivity extends FragmentActivity {
 
+    public String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

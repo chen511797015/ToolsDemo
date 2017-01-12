@@ -17,7 +17,8 @@ import static android.R.attr.handle;
 
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
-    private static final String TAG = "BaseAppCompatActivity";
+
+    public String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

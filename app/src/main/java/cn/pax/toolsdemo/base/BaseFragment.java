@@ -10,10 +10,11 @@ import android.view.ViewGroup;
 
 /**
  * Created by chendd on 2017/1/11.
- *
  */
 
 public abstract class BaseFragment extends Fragment implements View.OnTouchListener {
+
+    public String TAG = this.getClass().getSimpleName();
 
     private int mLayoutId;
     protected View mView;

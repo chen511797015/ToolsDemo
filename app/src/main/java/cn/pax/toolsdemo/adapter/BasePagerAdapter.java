@@ -8,17 +8,17 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * Created by chendd on 2017/1/11.
+ * Created by chendd on 2017/1/12.
  */
 
-public class SystemPagerAdapter extends FragmentPagerAdapter {
-
+public class BasePagerAdapter extends FragmentPagerAdapter {
     List<Fragment> mList;
-    String[] mData = {"相机", "网络"};
+    String[] mData;
 
-    public SystemPagerAdapter(FragmentManager fm, List<Fragment> mList) {
+    public BasePagerAdapter(FragmentManager fm, List<Fragment> mList, String[] mData) {
         super(fm);
         this.mList = mList;
+        this.mData = mData;
     }
 
     @Override
@@ -30,7 +30,6 @@ public class SystemPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return mList.size();
     }
-
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
