@@ -46,7 +46,9 @@ public class SystemFragment extends BaseFragment {
 
         mList = new ArrayList<>();
         CameraFragment mCameraFragment = new CameraFragment();
+        RouterFragment mRouterFragment = new RouterFragment();
         mList.add(mCameraFragment);
+        mList.add(mRouterFragment);
 
 
         SystemPagerAdapter mSystemPagerAdapter = new SystemPagerAdapter(getFragmentManager(), mList);

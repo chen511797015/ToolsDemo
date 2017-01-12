@@ -14,7 +14,7 @@ import java.util.List;
 public class SystemPagerAdapter extends FragmentPagerAdapter {
 
     List<Fragment> mList;
-    String[] mData = {"相机"};
+    String[] mData = {"相机", "网络"};
 
     public SystemPagerAdapter(FragmentManager fm, List<Fragment> mList) {
         super(fm);

@@ -26,9 +26,6 @@ import cn.pax.toolsdemo.activity.CustomScanActivity;
 import cn.pax.toolsdemo.base.BaseFragment;
 import cn.pax.toolsdemo.bean.EventBusBean;
 
-import static android.R.attr.x;
-import static android.R.attr.y;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by chendd on 2017/1/11.
