@@ -8,8 +8,8 @@ import cn.pax.toolsdemo.base.BaseFragment;
  */
 
 public class PrintFragment extends BaseFragment {
-    private static final String TAG = "PrintFragment";
 
+    private static final String TAG = "PrintFragment";
 
     @Override
     protected int setView() {
