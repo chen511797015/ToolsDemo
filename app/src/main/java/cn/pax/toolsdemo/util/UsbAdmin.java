@@ -48,6 +48,8 @@ public class UsbAdmin {
         mUsbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
         mPermissionIntent = PendingIntent.getBroadcast(mContext, USB_REQUEST_CODE, new Intent(ACTION_USB_PERMISSION), USB_FLAG);
         IntentFilter mFilter = new IntentFilter(ACTION_USB_PERMISSION);
+        mFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+        mFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         mContext.registerReceiver(mReceiver, mFilter);
 
 
@@ -74,32 +76,45 @@ public class UsbAdmin {
      */
     @SuppressLint("NewApi")
     private void findPrintDevice(UsbDevice device) {
+        StringBuffer sb = new StringBuffer();
         UsbInterface mUsbInterface = null;
         UsbEndpoint ep = null;
         String deviceName = device.getDeviceName();
         Log.i(TAG, "deviceName: " + deviceName);
+        sb.append("deviceName: " + deviceName + "\r\n");
         int productId = device.getProductId();
         Log.i(TAG, "productId: " + productId);
+
         int vendorId = device.getVendorId();
         Log.i(TAG, "vendorId: " + vendorId);
+
         int deviceId = device.getDeviceId();
         Log.i(TAG, "deviceId: " + deviceId);
+
         int interfaceCount = device.getInterfaceCount();
         Log.i(TAG, "interfaceCount: " + interfaceCount);
+
         int deviceClass = device.getDeviceClass();
         Log.i(TAG, "deviceClass: " + deviceClass);
 
-        if (deviceClass == 0) {
+        sb.append("productId: " + productId + "\r\n");
+        sb.append("vendorId: " + vendorId + "\r\n");
+        sb.append("deviceId: " + deviceId + "\r\n");
+        sb.append("interfaceCount: " + interfaceCount + "\r\n");
+        sb.append("deviceClass: " + deviceClass + "\r\n");
 
-            mUsbInterface = device.getInterface(0);
-            int interfaceClass = mUsbInterface.getInterfaceClass();
-            Log.i(TAG, "interfaceClass: " + interfaceClass);
-            String name = mUsbInterface.getName();
-            Log.i(TAG, "name: " + name);
-
+        if (deviceClass == 0 & interfaceCount != 0) {
+            for (int i = 0; i < interfaceCount; i++) {
+                mUsbInterface = device.getInterface(i);
+                int interfaceClass = mUsbInterface.getInterfaceClass();
+                Log.i(TAG, "interfaceClass: " + interfaceClass);
+                sb.append("interfaceClass: " + interfaceClass + "\r\n");
+                String name = mUsbInterface.getName();
+                Log.i(TAG, "name: " + name);
+                sb.append("name: " + name + "\r\n");
+            }
         }
-
-
+        Log.e(TAG, sb.toString());
     }
 
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -124,6 +139,7 @@ public class UsbAdmin {
 
                 }
             }
+            //TODO usb设备的拔插
         }
     };
 
