@@ -3,11 +3,11 @@ package cn.pax.toolsdemo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -96,6 +96,7 @@ public class MainActivity extends BaseAppCompatActivity {
     @Override
     protected void init() {
 
+
     }
 
 
@@ -123,5 +124,12 @@ public class MainActivity extends BaseAppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.e(TAG, "获取权限信息: ");
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

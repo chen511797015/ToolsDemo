@@ -51,7 +51,6 @@ public class UsbFragment extends BaseFragment {
 
         BasePagerAdapter mBasePagerAdapter = new BasePagerAdapter(getFragmentManager(), mList, mData);
         vp_usb.setAdapter(mBasePagerAdapter);
-
         //绑定ViewPager
         tb_usb.setupWithViewPager(vp_usb);
 

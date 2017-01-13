@@ -1,5 +1,6 @@
 package cn.pax.toolsdemo.fragment;
 
+
 import cn.pax.toolsdemo.R;
 import cn.pax.toolsdemo.base.BaseFragment;
 
@@ -14,6 +15,7 @@ public class PrintFragment extends BaseFragment {
     @Override
     protected int setView() {
         return R.layout.fragment_print;
+
     }
 
     @Override
