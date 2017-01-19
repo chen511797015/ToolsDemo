@@ -13,6 +13,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        new UsbAdmin(this).openUsb();
+        //new UsbAdmin(this).openUsb();
     }
 }

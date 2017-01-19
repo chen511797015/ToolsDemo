@@ -45,9 +45,10 @@ public class UsbFragment extends BaseFragment {
     @Override
     protected void initView() {
         List<Fragment> mList = new ArrayList<>();
-        String[] mData = {"打印机"};
+        String[] mData = {"打印机", "Usb列表"};
 
         mList.add(new PrintFragment());
+        mList.add(new UsbListFragment());
 
         BasePagerAdapter mBasePagerAdapter = new BasePagerAdapter(getFragmentManager(), mList, mData);
         vp_usb.setAdapter(mBasePagerAdapter);

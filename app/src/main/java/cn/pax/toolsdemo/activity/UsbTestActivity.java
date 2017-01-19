@@ -1,193 +1,263 @@
 package cn.pax.toolsdemo.activity;
 
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbRequest;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
+import javax.security.auth.login.LoginException;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.pax.toolsdemo.R;
+import cn.pax.toolsdemo.service.MyPrintService;
 
 /**
  * 测试usb设备
  */
 
-public class UsbTestActivity extends AppCompatActivity implements View.OnClickListener {
+public class UsbTestActivity extends AppCompatActivity {
+
 
     private static final String TAG = "UsbTestActivity";
 
-    //设备列表
-    private HashMap<String, UsbDevice> deviceList;
-    //从设备读数据
-    private Button read_btn;
-    //给设备写数据（发指令）
-    private Button write_btn;
-    //USB管理器:负责管理USB设备的类
-    private UsbManager manager;
-    //找到的USB设备
-    private UsbDevice mUsbDevice;
-    //代表USB设备的一个接口
-    private UsbInterface mInterface;
-    private UsbDeviceConnection mDeviceConnection;
-    //代表一个接口的某个节点的类:写数据节点
-    private UsbEndpoint usbEpOut;
-    //代表一个接口的某个节点的类:读数据节点
-    private UsbEndpoint usbEpIn;
-    //要发送信息字节
-    private byte[] sendbytes;
-    //接收到的信息字节
-    private byte[] receiveytes;
+    @BindView(R.id.btn_print)
+    Button btnPrint;
+    @BindView(R.id.btn_info)
+    Button btnInfo;
+    @BindView(R.id.tv_usb_info)
+    TextView tvUsbInfo;
 
+
+    private static final String ACTION_USB_PERMISSION =
+            "com.android.example.USB_PERMISSION";
+    private UsbManager mManager;
+    private UsbDevice mDevice;
+    private UsbDeviceConnection mConnection;
+    private UsbEndpoint mEndpoint;//usb端点
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usb_test);
+        ButterKnife.bind(this);
 
-        initUsbData();
+        startService(new Intent(this, MyPrintService.class));
 
-        initView();
+        mManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+
+
+        initReceiver();
+
+        /**
+         * Returns the raw USB descriptors for the device.
+         */
+
+
+        openUsb();
+
+
     }
 
-    private void initView() {
-        read_btn = (Button) findViewById(R.id.read_btn);
-        write_btn = (Button) findViewById(R.id.write_btn);
-        read_btn.setOnClickListener(this);
-        write_btn.setOnClickListener(this);
-    }
-
-    private void initUsbData() {
-        // 获取USB设备
-        manager = (UsbManager) getSystemService(Context.USB_SERVICE);
-        //获取到设备列表
-        deviceList = manager.getDeviceList();
-        Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
-        while (deviceIterator.hasNext()) {
-            mUsbDevice = deviceIterator.next();
+    /**
+     * 打开usb
+     */
+    private void openUsb() {
+        HashMap<String, UsbDevice> deviceList = mManager.getDeviceList();
+        if (deviceList.size() == 0) {//没有usb设备
+            mDevice = null;
+            return;
         }
-
-        //获取设备接口
-        for (int i = 0; i < mUsbDevice.getInterfaceCount(); ) {
-            // 一般来说一个设备都是一个接口，你可以通过getInterfaceCount()查看接口的个数
-            // 这个接口上有两个端点，分别对应OUT 和 IN
-            UsbInterface usbInterface = mUsbDevice.getInterface(i);
-            mInterface = usbInterface;
-            break;
-        }
-
-        //用UsbDeviceConnection 与 UsbInterface 进行端点设置和通讯
-        if (mInterface.getEndpoint(1) != null) {
-            usbEpOut = mInterface.getEndpoint(1);
-        }
-        if (mInterface.getEndpoint(0) != null) {
-            usbEpIn = mInterface.getEndpoint(0);
-        }
-
-        if (mInterface != null) {
-            // 判断是否有权限
-            if (manager.hasPermission(mUsbDevice)) {
-                // 打开设备，获取 UsbDeviceConnection 对象，连接设备，用于后面的通讯
-                mDeviceConnection = manager.openDevice(mUsbDevice);
-                if (mDeviceConnection == null) {
-                    return;
-                }
-                if (mDeviceConnection.claimInterface(mInterface, true)) {
-                    showTmsg("找到设备接口");
-                } else {
-                    mDeviceConnection.close();
-                }
-            } else {
-                showTmsg("没有权限");
+        Iterator<UsbDevice> iterator = deviceList.values().iterator();
+        while (iterator.hasNext()) {
+            UsbDevice usbDevice = iterator.next();
+            if (usbDevice.getProductId() == 30017 && usbDevice.getVendorId() == 1157 || usbDevice.getProductId() == 649 && usbDevice.getVendorId() == 10473) {
+                mManager.requestPermission(usbDevice, PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0));
             }
-        } else {
-            showTmsg("没有找到设备接口！");
         }
     }
 
-
-    //文字提示方法
-    private void showTmsg(String msg) {
-        Toast.makeText(UsbTestActivity.this, msg, Toast.LENGTH_SHORT).show();
+    private void initReceiver() {
+        IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
+        registerReceiver(mReceiver, filter);
     }
 
-    @Override
+
+    @OnClick({R.id.btn_print, R.id.btn_info})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.write_btn:
-                Log.e(TAG, "onClick: 1111111111");
-                sendToUsb("按照规则给设备发指令！");
-                break;
-            case R.id.read_btn:
+            case R.id.btn_print:
+                //打印信息
 
-                Log.e(TAG, "onClick: 22222222222222222");
-                readFromUsb();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        byte[] PRINT_CONCENTRATION_LEVEL = {0x1b, '#', 0x4B};
+                        byte[] PRINT_SELF_CHECKING_INFORMATION = {0x1b, '#', '#', 0x53, 0x45, 0x4C, 0x46};//打印机浓度
+                        //返回出厂日期
+                        byte[] a = {0x1d, 0x67, 0x62};
+                        byte[] bytes = {0x1b, 0x12, 0x4a};//打印机器名称
+                        byte[] b = {};//打印机温度
+                        boolean command = sendCommand(PRINT_CONCENTRATION_LEVEL);
+                        Log.e(TAG, "run: " + command);
+                    }
+                }.start();
+
+                break;
+            case R.id.btn_info:
+                //列出信息
+                openUsb();
+                getPrinterInfo();
                 break;
         }
     }
 
-    private void sendToUsb(String content) {
-        try {
-            sendbytes = content.getBytes("GBK");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+    /**
+     * 列出打印机信息
+     */
+    private void getPrinterInfo() {
+        tvUsbInfo.setText("打印机设备信息获取失败!");
+        if (mDevice != null) {
+            StringBuffer sb = new StringBuffer();
+            sb.append("打印机信息如下:\r\n");
+            sb.append("ProductId=" + mDevice.getProductId() + "\r\n");
+            sb.append("VendorId=" + mDevice.getVendorId() + "\r\n");
+            sb.append("InterfaceCount=" + mDevice.getInterfaceCount() + "\r\n");
+            if (mDevice.getInterfaceCount() != 0) {
+                for (int i = 0; i < mDevice.getInterfaceCount(); i++) {
+                }
+            }
+            tvUsbInfo.setText(sb);
         }
-        int ret = -1;
-        // 发送准备命令
-        ret = mDeviceConnection.bulkTransfer(usbEpOut, sendbytes, sendbytes.length, 5000);
-        showTmsg("指令已经发送！" + ret);
-        // 接收发送成功信息(相当于读取设备数据)
-        receiveytes = new byte[128];   //根据设备实际情况写数据大小
-        ret = mDeviceConnection.bulkTransfer(usbEpIn, receiveytes, receiveytes.length, 10000);
-//        result_tv.setText(String.valueOf(ret));
-        Toast.makeText(this, String.valueOf(ret), Toast.LENGTH_SHORT).show();
     }
 
-    private void readFromUsb() {
-        //读取数据2
-        int outMax = usbEpOut.getMaxPacketSize();
-        int inMax = usbEpIn.getMaxPacketSize();
-        ByteBuffer byteBuffer = ByteBuffer.allocate(inMax);
-        UsbRequest usbRequest = new UsbRequest();
-        usbRequest.initialize(mDeviceConnection, usbEpIn);
-        usbRequest.queue(byteBuffer, inMax);
-        if (mDeviceConnection.requestWait() == usbRequest) {
-            byte[] retData = byteBuffer.array();
-            try {
-                showTmsg("收到数据：" + new String(retData, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (ACTION_USB_PERMISSION.equals(action)) {
+                synchronized (this) {
+                    UsbDevice device = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                        Log.e(TAG, "授权成功!");
+                        if (device != null) {
+                            //执行操作
+                            setDevice(device);
+                        } else {
+                            mDevice = null;
+                        }
+                    } else {
+                        Log.e(TAG, "permission denied for device " + device);
+                    }
+                }
             }
         }
+    };
 
-        //TODO 获取外接设备输入信息
-        try {
-            //获得外接USB输入设备的信息
-            Process p = Runtime.getRuntime().exec("cat /proc/bus/input/devices");
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line = null;
-            while ((line = in.readLine()) != null) {
-                String deviceInfo = line.trim();
-                //对获取的每行的设备信息进行过滤，获得自己想要的。
+    /**
+     * 设置打印机信息
+     *
+     * @param device
+     */
+    private void setDevice(UsbDevice device) {
+        if (null != device) {
+            mDevice = device;
+            int interfaceCount = device.getInterfaceCount();
+            Log.e(TAG, "接口数量: " + interfaceCount);
+            if (interfaceCount != 0) {
+                for (int i = 0; i < interfaceCount; i++) {
+                    UsbInterface usbInterface = device.getInterface(i);
+                    int interfaceClass = usbInterface.getInterfaceClass();
+                    if (interfaceClass == UsbConstants.USB_CLASS_PRINTER) {//打印机类型
+                        int endpointCount = usbInterface.getEndpointCount();
+                        for (int j = 0; j < endpointCount; j++) {
+                            UsbEndpoint endpoint = usbInterface.getEndpoint(j);
+                            if (endpoint.getDirection() == UsbConstants.USB_DIR_OUT && endpoint.getType() == UsbConstants.USB_ENDPOINT_XFER_BULK) {
+                                Log.e(TAG, "接口是: " + i + "      类是: " + usbInterface.getInterfaceClass() +
+                                        "       端点是: " + j
+                                        + "     方向是: " + endpoint.getDirection() +
+                                        "       类型是: " + endpoint.getType());
+
+                                //建立连接
+                                mEndpoint = endpoint;
+                                UsbDeviceConnection connection = mManager.openDevice(mDevice);
+                                boolean b = connection.claimInterface(usbInterface, true);//申明接口
+                                if (null != connection && b) {
+                                    mConnection = connection;
+                                    Log.e(TAG, "设备连接成功");
+                                } else {
+                                    mConnection = null;
+                                    Log.e(TAG, "设备连接失败");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
             }
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
         }
     }
 
+    /**
+     * 批量传输数据
+     */
+    public boolean sendCommand(byte[] mContent) {
+        boolean result;
+        synchronized (this) {
+            int len = -1;
+            if (mConnection != null) {
+                // 批量传输数据: 传输方向,传输内容,传输内容长度,超时时间
+                len = mConnection.bulkTransfer(mEndpoint, mContent, mContent.length, 10000);
+            }
+            if (len < 0) {
+                Log.e(TAG, "打印数据发送失败!" + len);
+                result = false;
+            } else {
+                Log.e(TAG, "打印数据发送成功!" + len + "个字节");
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 关闭
+     */
+
+    public void closeUsb() {
+        if (mConnection != null) {
+            mConnection.close();
+            mConnection = null;
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(mReceiver);
+        closeUsb();
+        mDevice = null;
+    }
 }

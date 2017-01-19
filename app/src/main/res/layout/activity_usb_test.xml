@@ -10,18 +10,33 @@
 
 
     <Button
-        android:id="@+id/read_btn"
+        android:id="@+id/btn_print"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="read"
+        android:text="打印测试"
         android:textSize="30sp" />
 
 
     <Button
-        android:id="@+id/write_btn"
+        android:id="@+id/btn_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="write"
+        android:text="设备信息"
         android:textSize="30sp" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_usb_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp" />
+
+    </ScrollView>
+
 
 </LinearLayout>
