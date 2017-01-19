@@ -181,7 +181,7 @@ public class UsbListFragment extends BaseFragment implements View.OnClickListene
             if (ACTION_USB_PERMISSION.equals(action)) {
                 synchronized (this) {
                     UsbDevice usbDevice = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-
+                    sb = new StringBuilder();
                     if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
                         if (usbDevice != null) {
                             //call method to set up device communication

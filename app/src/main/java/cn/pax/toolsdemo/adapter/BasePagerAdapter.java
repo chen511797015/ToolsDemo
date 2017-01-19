@@ -14,11 +14,13 @@ import java.util.List;
 public class BasePagerAdapter extends FragmentPagerAdapter {
     List<Fragment> mList;
     String[] mData;
+    FragmentManager fm;
 
     public BasePagerAdapter(FragmentManager fm, List<Fragment> mList, String[] mData) {
         super(fm);
         this.mList = mList;
         this.mData = mData;
+        this.fm = fm;
     }
 
     @Override
@@ -34,6 +36,8 @@ public class BasePagerAdapter extends FragmentPagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         //super.destroyItem(container, position, object);
+        fm.beginTransaction().hide(mList.get(position)).commit();
+
     }
 
     @Override

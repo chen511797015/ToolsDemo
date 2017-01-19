@@ -31,6 +31,7 @@ import cn.pax.toolsdemo.fragment.FrameFragment;
 import cn.pax.toolsdemo.fragment.SystemFragment;
 import cn.pax.toolsdemo.fragment.UsbFragment;
 import cn.pax.toolsdemo.fragment.WidgetFragment;
+import cn.pax.toolsdemo.util.ScanGunKeyEventHelper;
 
 public class MainActivity extends BaseAppCompatActivity {
 
@@ -45,6 +46,8 @@ public class MainActivity extends BaseAppCompatActivity {
     List<Fragment> mFragmentList;
     MainPagerAdapter mAdapter;
 
+    ScanGunKeyEventHelper mScanGunKey;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +55,19 @@ public class MainActivity extends BaseAppCompatActivity {
 
         initView();
 
+        initScanner();
 
+
+    }
+
+    private void initScanner() {
+        mScanGunKey = new ScanGunKeyEventHelper();
+        mScanGunKey.setOnBarCodeCatchListener(new ScanGunKeyEventHelper.OnScanSuccessListener() {
+            @Override
+            public void onScanSuccess(String barcode) {
+                Log.e(TAG, "获取读取的内容: " + barcode);
+            }
+        });
     }
 
     @Override
@@ -137,10 +152,25 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_UP) {
-            Log.e(TAG, "onKeyDown: ");
+
+
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                //若为回车健
+
+            }
+
+
         }
+
         //return super.onKeyDown(keyCode, event);
         return false;
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        Log.e(TAG, "dispatchKeyEvent: ");
+        mScanGunKey.analysisKeyEvent(event);
+        return super.dispatchKeyEvent(event);
     }
 }
