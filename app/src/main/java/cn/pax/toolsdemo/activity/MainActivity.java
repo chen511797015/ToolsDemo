@@ -102,6 +102,7 @@ public class MainActivity extends BaseAppCompatActivity {
         mViewPager.setAdapter(mAdapter);
         //将TabLayout与ViewPager绑定在一起
         mTabLayout.setupWithViewPager(mViewPager);
+
     }
 
     @Override
@@ -115,13 +116,12 @@ public class MainActivity extends BaseAppCompatActivity {
 
     }
 
-
     /**
-     * 获取返回的扫描值
+     * 获取扫描二维码的返回的扫描值
      *
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * @param requestCode 请求码
+     * @param resultCode  返回码
+     * @param data        intent对象
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -142,34 +142,8 @@ public class MainActivity extends BaseAppCompatActivity {
         }
     }
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.e(TAG, "获取权限信息: ");
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                //若为回车健
-
-            }
-
-
-        }
-
-        //return super.onKeyDown(keyCode, event);
-        return false;
-    }
-
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        Log.e(TAG, "dispatchKeyEvent: ");
         mScanGunKey.analysisKeyEvent(event);
         return super.dispatchKeyEvent(event);
     }
