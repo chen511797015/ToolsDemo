@@ -73,8 +73,6 @@ public class UsbTestActivity extends AppCompatActivity {
         /**
          * Returns the raw USB descriptors for the device.
          */
-
-
         openUsb();
 
 

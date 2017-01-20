@@ -128,7 +128,7 @@ public class CameraFragment extends BaseFragment {
             return mBitmap;
         } catch (WriterException e) {
             e.printStackTrace();
-        } catch (IllegalArgumentException iae) { // ?
+        } catch (IllegalArgumentException iae) {
             return null;
         }
 

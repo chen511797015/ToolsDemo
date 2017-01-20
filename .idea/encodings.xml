@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/account.ini" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/accountDetail.ini" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/goodsinfo.ini" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/ticket.ini" charset="GBK" />
+  </component>
+</project>

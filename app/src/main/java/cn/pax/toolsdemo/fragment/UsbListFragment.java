@@ -225,7 +225,6 @@ public class UsbListFragment extends BaseFragment implements View.OnClickListene
                     } else {
                         Log.d(TAG, "permission denied for device ");
                     }
-
                 }
             }
         }

@@ -1,13 +1,12 @@
 package cn.pax.toolsdemo.util;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
@@ -55,17 +54,35 @@ public class UsbAdmin {
 
     }
 
-
     /**
      * 打开usb设备
      */
     public void openUsb() {
-
-        HashMap<String, UsbDevice> deviceList = mUsbManager.getDeviceList();
-        Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
-        while (deviceIterator.hasNext()) {
-            UsbDevice device = deviceIterator.next();
-            mUsbManager.requestPermission(device, mPermissionIntent);
+        try {
+            if (mDevice != null) {
+                findPrintDevice(mDevice);
+                if (mConnection == null) {
+                    HashMap<String, UsbDevice> deviceList = mUsbManager.getDeviceList();
+                    Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+                    while (deviceIterator.hasNext()) {
+                        UsbDevice device = deviceIterator.next();
+                        if (device.getVendorId() == 1157 && device.getProductId() == 30017 ||
+                                device.getVendorId() == 10473 && device.getProductId() == 649)
+                            mUsbManager.requestPermission(device, mPermissionIntent);
+                    }
+                }
+            } else {
+                HashMap<String, UsbDevice> deviceList = mUsbManager.getDeviceList();
+                Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+                while (deviceIterator.hasNext()) {
+                    UsbDevice device = deviceIterator.next();
+                    if (device.getVendorId() == 1157 && device.getProductId() == 30017 ||
+                            device.getVendorId() == 10473 && device.getProductId() == 649)
+                        mUsbManager.requestPermission(device, mPermissionIntent);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -76,46 +93,97 @@ public class UsbAdmin {
      */
     @SuppressLint("NewApi")
     private void findPrintDevice(UsbDevice device) {
-        StringBuffer sb = new StringBuffer();
-        UsbInterface mUsbInterface = null;
-        UsbEndpoint ep = null;
-        String deviceName = device.getDeviceName();
-        Log.i(TAG, "deviceName: " + deviceName);
-        sb.append("deviceName: " + deviceName + "\r\n");
-        int productId = device.getProductId();
-        Log.i(TAG, "productId: " + productId);
+        if (device != null) {
+            mDevice = device;
+            UsbInterface mUsbInterface = null;
+            UsbEndpoint ep = null;
+            int interfaceCount = device.getInterfaceCount();
+            int deviceClass = device.getDeviceClass();
+            if (deviceClass == 0 & interfaceCount != 0) {
+                for (int i = 0; i < interfaceCount; i++) {
+                    mUsbInterface = device.getInterface(i);
+                    int interfaceClass = mUsbInterface.getInterfaceClass();
+                    if (interfaceClass == UsbConstants.USB_CLASS_PRINTER) {
+                        int endpointCount = mUsbInterface.getEndpointCount();
+                        for (int j = 0; j < endpointCount; j++) {
+                            UsbEndpoint endpoint = mUsbInterface.getEndpoint(j);
+                            if (endpoint.getDirection() == 0 && endpoint.getType() == UsbConstants.USB_ENDPOINT_XFER_BULK) {
+                                ep = endpoint;
+                                Log.d(TAG, "接口是: " + i + "      类是: " + mUsbInterface.getInterfaceClass() +
+                                        "       端点是: " + j
+                                        + "     方向是: " + endpoint.getDirection() +
+                                        "       类型是: " + endpoint.getType());
+                                break;
+                            }
 
-        int vendorId = device.getVendorId();
-        Log.i(TAG, "vendorId: " + vendorId);
+                        }
+                    }
 
-        int deviceId = device.getDeviceId();
-        Log.i(TAG, "deviceId: " + deviceId);
+                }
+            }
 
-        int interfaceCount = device.getInterfaceCount();
-        Log.i(TAG, "interfaceCount: " + interfaceCount);
-
-        int deviceClass = device.getDeviceClass();
-        Log.i(TAG, "deviceClass: " + deviceClass);
-
-        sb.append("productId: " + productId + "\r\n");
-        sb.append("vendorId: " + vendorId + "\r\n");
-        sb.append("deviceId: " + deviceId + "\r\n");
-        sb.append("interfaceCount: " + interfaceCount + "\r\n");
-        sb.append("deviceClass: " + deviceClass + "\r\n");
-
-        if (deviceClass == 0 & interfaceCount != 0) {
-            for (int i = 0; i < interfaceCount; i++) {
-                mUsbInterface = device.getInterface(i);
-                int interfaceClass = mUsbInterface.getInterfaceClass();
-                Log.i(TAG, "interfaceClass: " + interfaceClass);
-                sb.append("interfaceClass: " + interfaceClass + "\r\n");
-                String name = mUsbInterface.getName();
-                Log.i(TAG, "name: " + name);
-                sb.append("name: " + name + "\r\n");
+            mEndpointIntr = ep;
+            if (mDevice != null && mUsbInterface != null) {
+                UsbDeviceConnection connection = mUsbManager.openDevice(mDevice);
+                boolean claimInterface = connection.claimInterface(mUsbInterface, true);//申明接口
+                if (connection != null && claimInterface) {
+                    Log.d(TAG, "usb设备连接成功!");
+                    mConnection = connection;
+                } else {
+                    Log.d(TAG, "usb设备连接失败!");
+                    mConnection = null;
+                }
             }
         }
-        Log.e(TAG, sb.toString());
     }
+
+
+    /**
+     * 批量传输数据
+     */
+    public boolean sendCommand(byte[] mContent) {
+        boolean result;
+        synchronized (this) {
+            int len = -1;
+            if (mConnection != null) {
+                // 批量传输数据: 传输方向,传输内容,传输内容长度,超时时间
+                len = mConnection.bulkTransfer(mEndpointIntr, mContent, mContent.length, 10000);
+            }
+            if (len < 0) {
+                //打印失败,尝试打开打印机
+                Log.d(TAG, "发送失败");
+                openUsb();
+                result = false;
+            } else {
+                Log.d(TAG, "发送成功");
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 关闭
+     */
+    public void closeUsb() {
+        if (mConnection != null) {
+            mConnection.close();
+            mConnection = null;
+        }
+    }
+
+    /**
+     * 判断usb连接状态
+     *
+     * @return
+     */
+    public boolean getUsbStatus() {
+        if (mConnection == null)
+            return false;
+        else
+            return true;
+    }
+
 
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -133,15 +201,12 @@ public class UsbAdmin {
                             findPrintDevice(device);
                         } else {
                             //关闭usb连接
-
+                            mConnection = null;
                         }
                     }
 
                 }
             }
-            //TODO usb设备的拔插
         }
     };
-
-
 }
