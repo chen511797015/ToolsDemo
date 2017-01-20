@@ -32,10 +32,10 @@ public class PrinterUtil {
         if (mUsbAdmin == null) {
             mUsbAdmin = new UsbAdmin(mContext);
         }
-        if (mTemplate == null){
+        if (mTemplate == null) {
             loadTemplate(mContext);
         }
-            return mUsbAdmin;
+        return mUsbAdmin;
     }
 
     /**
@@ -170,7 +170,6 @@ public class PrinterUtil {
 
         // 高度指令
         String mHeightHexString = Integer.toHexString(mHeight);
-        //TODO 原始值2
         if (mHeightHexString.length() > 5) {
             Log.e("decodeBitmap error", "高度超出 height is too large" + mHeightHexString.length());
             return null;

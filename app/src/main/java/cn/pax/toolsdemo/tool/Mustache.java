@@ -93,8 +93,6 @@ public class Mustache {
 
             if (c == '\n') {
                 line++;
-                // if we just parsed an open section or close section task, we'll skip the first
-                // newline character following it, if desired; TODO: handle CR, sigh
                 if (skipNewline) {
                     skipNewline = false;
                     continue;
@@ -134,7 +132,6 @@ public class Mustache {
                     if (c == end1) {
                         if (end2 == -1) {
                             if (text.charAt(0) == '=') {
-                                // TODO: change delimiters
                             } else {
                                 sanityCheckTag(text, line, start1, start2);
                                 accum = accum.addTagSegment(text, line);
@@ -152,7 +149,6 @@ public class Mustache {
                 case MATCHING_END:
                     if (c == end2) {
                         if (text.charAt(0) == '=') {
-                            // TODO: change delimiters
                         } else {
                             sanityCheckTag(text, line, start1, start2);
                             accum = accum.addTagSegment(text, line);
@@ -375,7 +371,6 @@ public class Mustache {
         @Override
         public void execute(Template tmpl, Template.Context ctx, Writer out) {
             Object value = tmpl.getValue(ctx, _name);
-            // TODO: configurable behavior on missing values
             if (value != null) {
                 String text = String.valueOf(value);
                 write(out, _escapeHTML ? escapeHTML(text) : text);
@@ -415,7 +410,7 @@ public class Mustache {
         public void execute(Template tmpl, Template.Context ctx, Writer out) {
             Object value = tmpl.getValue(ctx, _name);
             if (value == null) {
-                return; // TODO: configurable behavior on missing values
+                return;
             }
             if (value instanceof Iterable<?>) {
                 value = ((Iterable<?>) value).iterator();
@@ -457,7 +452,7 @@ public class Mustache {
         public void execute(Template tmpl, Template.Context ctx, Writer out) {
             Object value = tmpl.getValue(ctx, _name);
             if (value == null) {
-                executeSegs(tmpl, ctx, out); // TODO: configurable behavior on missing values
+                executeSegs(tmpl, ctx, out);
             }
             if (value instanceof Iterable<?>) {
                 Iterable<?> iable = (Iterable<?>) value;

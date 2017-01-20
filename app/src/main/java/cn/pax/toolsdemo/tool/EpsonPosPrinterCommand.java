@@ -177,7 +177,6 @@ public class EpsonPosPrinterCommand {
     }
 
     public static byte[] setHT() {
-        // TODO  待处理任务窗口使用,注释是自己写代码的时候未完成或者是待完善的地方的比个标记
         return new byte[]{ESC, 'D'};
     }
 

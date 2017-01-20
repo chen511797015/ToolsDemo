@@ -22,6 +22,7 @@ import butterknife.OnClick;
 import cn.pax.toolsdemo.R;
 import cn.pax.toolsdemo.base.BaseFragment;
 import cn.pax.toolsdemo.tool.EcrPosprintException;
+import cn.pax.toolsdemo.tool.PrintImgThread;
 import cn.pax.toolsdemo.tool.PrintOrderThread;
 import cn.pax.toolsdemo.tool.PrintThread;
 import cn.pax.toolsdemo.tool.PrinterConstants;
@@ -149,11 +150,11 @@ public class PrintFragment extends BaseFragment {
                 new PrintOrderThread(getActivity()).run();
                 break;
             case R.id.brn_print_bar_code://打印条码
+                new PrintImgThread(getActivity(), R.mipmap.bar_code_2).run();
 
                 break;
             case R.id.btn_print_qr_code://打印二维码
-
-
+                new PrintImgThread(getActivity(), R.mipmap.pax_logo).run();
                 break;
         }
     }
