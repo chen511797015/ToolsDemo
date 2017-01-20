@@ -5,6 +5,7 @@ import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -151,7 +152,6 @@ public class PrintFragment extends BaseFragment {
                 break;
             case R.id.brn_print_bar_code://打印条码
                 new PrintImgThread(getActivity(), R.mipmap.bar_code_2).run();
-
                 break;
             case R.id.btn_print_qr_code://打印二维码
                 new PrintImgThread(getActivity(), R.mipmap.pax_logo).run();
