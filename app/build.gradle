@@ -45,4 +45,5 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     //RxPermissions
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+    compile files('libs/ErcPosApi_20170112_V1.0.jar')
 }

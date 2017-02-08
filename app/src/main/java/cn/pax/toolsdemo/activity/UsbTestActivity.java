@@ -62,20 +62,10 @@ public class UsbTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usb_test);
         ButterKnife.bind(this);
-
         startService(new Intent(this, MyPrintService.class));
-
         mManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-
-
         initReceiver();
-
-        /**
-         * Returns the raw USB descriptors for the device.
-         */
         openUsb();
-
-
     }
 
     /**

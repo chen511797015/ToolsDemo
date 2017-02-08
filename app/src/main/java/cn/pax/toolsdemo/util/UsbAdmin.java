@@ -113,7 +113,7 @@ public class UsbAdmin {
                                         "       端点是: " + j
                                         + "     方向是: " + endpoint.getDirection() +
                                         "       类型是: " + endpoint.getType());
-                                break;
+                                //break;
                             }
 
                         }
@@ -160,6 +160,14 @@ public class UsbAdmin {
             }
         }
         return result;
+    }
+
+
+    /**
+     * 读取数据
+     */
+    public byte[] readFromUsb() {
+        return null;
     }
 
     /**

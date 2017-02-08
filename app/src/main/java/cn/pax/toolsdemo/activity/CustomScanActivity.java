@@ -19,6 +19,7 @@ import cn.pax.toolsdemo.base.BaseAppCompatActivity;
 
 /**
  * Created by chendd on 2017/1/11.
+ *
  */
 
 public class CustomScanActivity extends BaseAppCompatActivity implements DecoratedBarcodeView.TorchListener {

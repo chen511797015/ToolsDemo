@@ -19,7 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,6 +28,11 @@
         </activity>
         <activity android:name=".activity.CustomScanActivity" />
         <activity android:name=".activity.UsbTestActivity">
+
+        </activity>
+
+        <activity android:name=".activity.NewUsbTestActivity">
+
 
         </activity>
 
@@ -42,6 +46,7 @@
                 android:name="android.printservice"
                 android:resource="@xml/printservice" />
         </service>
+
     </application>
 
 </manifest>
