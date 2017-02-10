@@ -134,7 +134,7 @@ public class PrintOrderThread implements Runnable {
             hashMap.put("ESC_EM_ON", new String(EpsonPosPrinterCommand.ESC_EM_ON));
             hashMap.put("ESC_EM_OFF", new String(EpsonPosPrinterCommand.ESC_EM_OFF));
 
-            /***************************************************
+            /*************************************************************************
              * 结算金额部分↓
              **************************************************************************/
             StringBuffer cashDetail = new StringBuffer();

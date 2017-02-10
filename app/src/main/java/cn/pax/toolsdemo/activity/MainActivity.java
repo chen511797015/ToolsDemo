@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.pax.api.CustomizedPrintCmd;
+import com.pax.api.EcrPosPrintManage;
 import com.pax.api.EcrPosprintException;
 
 import org.greenrobot.eventbus.EventBus;
@@ -109,7 +110,6 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @Override
     protected void initEvent() {
-
 
     }
 
