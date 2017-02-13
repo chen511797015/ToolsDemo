@@ -113,7 +113,6 @@ public class PrinterUtil {
         List<String> mList = new ArrayList<>();//二进制集合
         StringBuffer mSb;
 
-
         //每行字节数(除以8，不足补0)
         int mBitLen = mWidth / 8;
         int mZeroCount = mWidth % 8;
@@ -150,7 +149,6 @@ public class PrinterUtil {
             mList.add(mSb.toString());
         }
 
-
         // binaryStr每8位调用一次转换方法，再拼合
         List<String> mHexList = ConvertUtil.binaryListToHexStringList(mList);
         String mCommandHexString = "1D763000";
@@ -158,8 +156,6 @@ public class PrinterUtil {
         String mWidthHexString = Integer
                 .toHexString(mWidth % 8 == 0 ? mWidth / 8
                         : (mWidth / 8 + 1));
-
-
         if (mWidthHexString.length() > 2) {
             Log.e("decodeBitmap error", "宽度超出 width is too large");
             return null;
