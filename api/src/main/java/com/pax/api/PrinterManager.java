@@ -12,7 +12,7 @@ public class PrinterManager {
     private static final String TAG = "PrinterManager";
     Context mContext;
     static PrinterManager mPrinterManager = null;
-    UsbAdmin mUsbAdmin = null;
+    PrinterUtil mPrinterUtil = null;
 
     public static PrinterManager getInstance(Context mContext) {
         if (mPrinterManager == null) {
@@ -21,16 +21,15 @@ public class PrinterManager {
         return mPrinterManager;
     }
 
-    PrinterManager(Context mContext) {
+    private PrinterManager(Context mContext) {
         this.mContext = mContext;
-        mUsbAdmin = new UsbAdmin(mContext);
-        mUsbAdmin.OpenPort("USB_PRINTER");
+        if (null == mPrinterUtil) {
+            mPrinterUtil = PrinterUtil.registerPrinter(mContext);
+        }
     }
 
-
-    public void prnBitmap(Bitmap bitmap) {
-
-
+    public void prnBitmap(Bitmap bitmap) throws Exception {
+        mPrinterUtil.printBitmap(bitmap);
     }
 
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
 import cn.pax.toolsdemo.bean.TicketItemBean;
 import cn.pax.toolsdemo.util.NumberUtil;
 import cn.pax.toolsdemo.util.PrinterUtil;

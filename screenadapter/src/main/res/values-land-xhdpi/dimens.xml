@@ -4,6 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
 
-    <!--<dimen name="dp200">400dp</dimen>-->
-    <!--<dimen name="dp300">150dp</dimen>-->
+    <dimen name="dp200">400dp</dimen>
+    <dimen name="dp300">150dp</dimen>
 </resources>
