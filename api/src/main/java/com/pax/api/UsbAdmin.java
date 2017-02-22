@@ -222,6 +222,7 @@ public class UsbAdmin implements IPort {
         try {
             byte[] var8 = new byte[10000];
             int var4 = var3 / 10000;
+            int length = -1;
 
             //批量传输数据
             int var6;
@@ -230,7 +231,7 @@ public class UsbAdmin implements IPort {
                     var8[var6 % 10000] = var1[var6];
                 }
                 //传输数据,超时时间
-                mConnection.bulkTransfer(mOutEndpoint, var8, var8.length, writeTimeOut);
+                length = mConnection.bulkTransfer(mOutEndpoint, var8, var8.length, writeTimeOut);
             }
             if (var3 % 1000 != 0) {
                 byte[] var9 = new byte[var1.length - var4 * 10000];
@@ -238,7 +239,7 @@ public class UsbAdmin implements IPort {
                     var9[var6 - var4 * 10000] = var1[var6];
                 }
                 //传输数据,超时时间
-                mConnection.bulkTransfer(mOutEndpoint, var9, var9.length, writeTimeOut);
+                length = mConnection.bulkTransfer(mOutEndpoint, var9, var9.length, writeTimeOut);
 
 //                //发送数据
 //                byte[] byte2 = new byte[1024];
@@ -250,6 +251,12 @@ public class UsbAdmin implements IPort {
 //                for (Byte byte1 : byte2) {
 //                    Log.i("ret", "byte1 :" + byte1);
 //                }
+            }
+
+            if (length < 0) {
+                Log.e(TAG, "print error...");
+            } else {
+                Log.e(TAG, "print " + length + " byte...");
             }
             Log.e(TAG, "print end...");
             return var3;

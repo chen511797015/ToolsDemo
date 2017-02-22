@@ -45,6 +45,10 @@ public class PrinterManager {
 
     }
 
+    public void prnInit() throws Exception {
+        mPrinterUtil.writeData(new byte[]{0x1b, 0x40});
+    }
+
     public void prnStr(String data) throws Exception {
         mPrinterUtil.writeData(data);
     }

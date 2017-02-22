@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
+import HPRTAndroidSDK.HPRTPrinterHelper;
+import HPRTAndroidSDK.USBOperator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -104,20 +106,41 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.btn_cancel:
+                print();
                 break;
         }
     }
 
+
+    /**
+     * 开始打印
+     */
+    private void print() {
+
+        new Thread() {
+            @Override
+            public void run() {
+                Log.e(TAG, "run: " + Thread.currentThread().getName());
+                final Bitmap bmp = PrintUtil.getViewBitmap(MainActivity.this, sl);
+                HPRTPrinterHelper.PrintBitmap(bmp, (byte) 0, (byte) 0);
+            }
+        }.start();
+
+    }
+
     private void printBitmap(Bitmap bitmap) {
         try {
-            mPrinterManager = PrinterManager.getInstance(this);
-            //mPrinterManager.prnBitmap(bitmap);
-            //mPrinterManager.prnSetGray(20);
-            mPrinterManager.prnBytes(new byte[]{0x1d, 0x61, 0x00});
-            //wait(100);
-            mPrinterManager.prnStatus();
-            //mPrinterManager.prnStartCut(1);
             Log.e(TAG, "开始打印...");
+            mPrinterManager = PrinterManager.getInstance(this);
+            mPrinterManager.prnInit();
+//            new byte[]{0x1b, 0x23, 0x23, 0x43, 0x54, 0x46, 0x44, 0x78, 0x00}
+//            1B 23 23 53 54 44 50 n
+            //mPrinterManager.prnBytes(new byte[]{0x1b, 0x23, 0x23, 0x53, 0x54, 0x44, 0x50, 0xf});
+            Thread.sleep(1000);
+            mPrinterManager.prnBitmap(bitmap);
+            //mPrinterManager.prnStr("print test...");
+            mPrinterManager.prnStartCut(1);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
