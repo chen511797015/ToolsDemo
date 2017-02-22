@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="have_binding_device">已绑定设备</string>
+    <string name="pos_device">pos设备</string>
+    <string name="print_device">打印设备</string>
+    <string name="search_to_device">搜索到的设备</string>
+    <string name="connect_succeed">连接成功</string>
+    <string name="no_bluetooth">没有蓝牙设备</string>
+    <string name="device_management">设备管理</string>
+    <string name="searching">搜索中</string>
+    <string name="connecting">连接中</string>
+    <string name="hint">提示</string>
+    <string name="input_amount_is_wrong">金额输入有误</string>
+    <string name="is_disconnected_with_the_device">是否断开设备?</string>
+    <string name="affirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="select_the_default_connection_device">选择默认连接设备</string>
+    <string name="select_the_default_print_device">选择一个默认打印设备</string>
+    <string name="select_the_default_pos_device">选择一个默认pos设备</string>
+    <string name="if_we_need_to_connect_the">是否将</string>
+    <string name="set_as_the_default_device">设置为默认设备?</string>
+    <string name="refresh">刷新</string>
+    <string name="bluetooth_search_to_complete">蓝牙搜索完成</string>
+    <string name="connection_fail">连接失败</string>
+    <string name="disconnect">断开</string>
+    <string name="shop_information">店铺信息</string>
+
+    <string name="swiping_card">刷卡</string>
+    <string name="rmb">元</string>
+    <string name="deal_succeed">交易成功</string>
+    <string name="amount">金额</string>
+    <string name="please_enter_the_pos_card_or_credit_card_and_password_or_tap">
+        请在pos机上插卡或刷卡并输入密码或拍卡
+    </string>
+    <string name="user_cancel">用户取消</string>
+    <string name="signatures_cannot_be_empty">签名不能为空</string>
+    <string name="re_sign">重签</string>
+    <string name="print">打印</string>
+
+    <string name="sales_slip">签购单</string>
+    <string name="merchant_name">商户名称:  银联商务</string>
+    <string name="merchant_no">商户编号:  66933015411000</string>
+
+    <string name="terminal_number">终端号:</string>
+    <string name="operator">操作员:</string>
+    <string name="trade_type">交易类型:  消费</string>
+    <string name="batch_number">批次号:</string>
+    <string name="voucher_numbe">凭证号:</string>
+    <string name="date_time">日期/时间:</string>
+
+    <string name="reference_number">参考号:</string>
+    <string name="remark">备注:</string>
+    <string name="user_signature">持卡人签名</string>
+
+    <string name="card_no">卡号:</string>
+    <string name="authorization_code">授权码:</string>
+
+    <string name="um">商户存根</string>
+    <string name="printing">正在打印...</string>
+    <string name="no_print">不打印</string>
+    <string name="open_cash_box_succ">钱箱打开成功</string>
+    <string name="open_cash_box">正在打开钱箱...</string>
+    <string name="print_fail">打印失败</string>
+    <string name="print_succ">打印成功</string>
+    <string name="scaning">请扫码</string>
+    <string name="scan_succ">扫码成功</string>
+    <string name="scan_fail">扫码失败</string>
+
+    <string name="i_confirm">本人确认以上交易,同意将其计入本卡账号</string>
+    <string name="post_ype">设备类型</string>
+    <string name="setting">设置</string>
+    <string name="please_select_a_device_type">请选择设备类型</string>
+    <string name="cancel_the_default_pos_device">取消默认pos设备</string>
+    <string name="cancel_the_default_print_device">取消默认打印设备设备</string>
+    <string name="default_device">打印设备</string>
+    <string name="current_type">当前类型:</string>
+
+    <string name="submit">提交</string>
+    <string name="name">名称</string>
+    <string name="barcode">条形码</string>
+    <string name="price">价格</string>
+</resources>

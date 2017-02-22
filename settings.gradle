@@ -1,1 +1,1 @@
-include ':app', ':screenadapter', ':screenadapter', ':api'
+include ':app', ':screenadapter', ':screenadapter', ':api', ':printertest'

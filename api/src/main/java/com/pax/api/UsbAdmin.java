@@ -11,9 +11,11 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
+import android.hardware.usb.UsbRequest;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.util.Iterator;
 
 /**
@@ -91,9 +93,17 @@ public class UsbAdmin implements IPort {
             for (int i = 0; i < interfaceCount; i++) {
                 if (mUsbDevice.getInterface(i).getInterfaceClass() == UsbConstants.USB_CLASS_PRINTER) {
                     //找到打印机类,然后请求权限
-                    mUsbManager.requestPermission(mUsbDevice, mPendingIntent);
-                    l = true;
-                    return true;
+                    int productId = mUsbDevice.getProductId();
+                    Log.e(TAG, "ProductId: " + productId + ",DeviceId" + mUsbDevice.getDeviceId());
+                    if (!(productId == 30017)) {
+                        mUsbManager.requestPermission(mUsbDevice, mPendingIntent);
+                        l = true;
+                        return true;
+                    }
+//                    mUsbManager.requestPermission(mUsbDevice, mPendingIntent);
+//                    l = true;
+//                    return true;
+
                 }
             }
         }
@@ -229,7 +239,19 @@ public class UsbAdmin implements IPort {
                 }
                 //传输数据,超时时间
                 mConnection.bulkTransfer(mOutEndpoint, var9, var9.length, writeTimeOut);
+
+//                //发送数据
+//                byte[] byte2 = new byte[1024];
+//                //读取数据1   两种方法读取数据
+//                int ret = mConnection.bulkTransfer(mInEndpoint, byte2, byte2.length, 3000);
+//
+//                Log.i("ret", "ret:" + ret);
+//                Log.i("ret", "bat is ok  length:" + byte2.length);
+//                for (Byte byte1 : byte2) {
+//                    Log.i("ret", "byte1 :" + byte1);
+//                }
             }
+            Log.e(TAG, "print end...");
             return var3;
 
         } catch (Exception e) {
@@ -242,7 +264,23 @@ public class UsbAdmin implements IPort {
     @Override
     public int ReadData(byte[] var1) {
         try {
-            return mConnection.bulkTransfer(mInEndpoint, var1, var1.length, readTimeOut);
+            int bulkTransfer = mConnection.bulkTransfer(mInEndpoint, var1, var1.length, readTimeOut);
+//            int inMax = mInEndpoint.getMaxPacketSize();
+//            Log.e(TAG, "ReadData: " + bulkTransfer + "-------" + inMax);
+//            ByteBuffer byteBuffer = ByteBuffer.allocate(inMax);
+//            UsbRequest usbRequest = new UsbRequest();
+//            usbRequest.setClientData(this);
+//            usbRequest.initialize(mConnection, mInEndpoint);
+//            usbRequest.queue(byteBuffer, inMax);
+//            if (mConnection.requestWait() == usbRequest) {
+//                Object clientData = usbRequest.getClientData();
+//                Log.e(TAG, "ReadData: " + clientData);
+//                byte[] retData = byteBuffer.array();
+//                for (Byte byte1 : retData) {
+//                    // Log.e(TAG, "ReadData: " + byte1);
+//                }
+//            }
+            return bulkTransfer;
         } catch (Exception e) {
             e.printStackTrace();
             return -1;

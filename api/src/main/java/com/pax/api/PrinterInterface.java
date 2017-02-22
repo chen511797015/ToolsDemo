@@ -16,4 +16,8 @@ public interface PrinterInterface {
 
     int printBitmap(Bitmap bitmap) throws Exception;
 
+    int readData(byte[] var1) throws Exception;
+
+    int readData(byte[] var1, int var2, int var3) throws Exception;
+
 }

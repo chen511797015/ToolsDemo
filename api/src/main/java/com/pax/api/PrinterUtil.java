@@ -71,18 +71,36 @@ public class PrinterUtil implements PrinterInterface {
 
     @Override
     public int printBitmap(Bitmap bitmap) throws Exception {
-        int ret = -1;
+        int ret = 0;
         if (mUsbAdmin != null) {
             // ret = mUsbAdmin.WriteData(mBytes);
             for (Bitmap bm : BitmapUtils.getBitmapList(bitmap)) {
+                //打印失败的时候,保存一下数据,带连接上之后,继续打印
                 ret = mUsbAdmin.WriteData(BitmapUtils.decodeBitmap(bm));
-            }
-            if (ret == -1) {
-                throw new Exception("打印机连接异常,请检查打印机状态...");
+                if (ret == -1) {
+                    throw new Exception("打印机连接异常,请检查打印机状态...");
+                }
             }
         }
         return ret;
     }
 
+    @Override
+    public int readData(byte[] var1) throws Exception {
+        int ret = 0;
+        if (mUsbAdmin != null) {
+            ret = mUsbAdmin.ReadData(var1);
+        }
+        return ret;
+    }
+
+    @Override
+    public int readData(byte[] var1, int var2, int var3) throws Exception {
+        int ret = 0;
+        if (mUsbAdmin != null) {
+            mUsbAdmin.ReadData(var1, var2, var3);
+        }
+        return ret;
+    }
 
 }

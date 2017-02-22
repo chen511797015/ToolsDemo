@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="have_binding_device">bounded devices</string>
+    <string name="pos_device">pos device</string>
+    <string name="print_device">print device</string>
+    <string name="search_to_device">searched devices</string>
+    <string name="connect_succeed">connect succeed</string>
+    <string name="no_bluetooth">no bluetooth</string>
+    <string name="device_management">device management</string>
+    <string name="searching">searching</string>
+    <string name="connecting">connect ing</string>
+    <string name="hint">hint</string>
+    <string name="input_amount_is_wrong">input amount is wrong</string>
+    <string name="is_disconnected_with_the_device">is disconnected with the device?</string>
+    <string name="affirm">affirm</string>
+    <string name="cancel">cancel</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="select_the_default_connection_device">select the default connection device</string>
+    <string name="select_the_default_print_device">select a default print device</string>
+    <string name="select_the_default_pos_device">select a default pos device</string>
+    <string name="if_we_need_to_connect_the">Please make a decision to the device(</string>
+    <string name="set_as_the_default_device">).</string>
+    <string name="refresh">Refresh</string>
+    <string name="bluetooth_search_to_complete">Searching bluetooth device is completed</string>
+    <string name="connection_fail">connection fail</string>
+    <string name="disconnect">disconnect</string>
+    <string name="shop_information">shop information</string>
+
+
+    <string name="swiping_card">swiping card</string>
+    <string name="rmb">rmb</string>
+    <string name="deal_succeed">deal succeed</string>
+    <string name="amount">amount</string>
+    <string name="please_enter_the_pos_card_or_credit_card_and_password_or_tap">
+        Please swipe/insert/tap card and enter pin
+    </string>
+    <string name="user_cancel">user cancel</string>
+    <string name="signatures_cannot_be_empty">signatures cannot be empty</string>
+    <string name="re_sign">re-sign</string>
+
+    <string name="print">print</string>
+
+    <string name="sales_slip">sales slip</string>
+    <string name="merchant_name">merchant name:  PAX PAY</string>
+    <string name="merchant_no">merchant no:  66933015411000</string>
+
+    <string name="terminal_number">terminal number:</string>
+    <string name="operator">operator:</string>
+    <string name="trade_type">trade type:  sale</string>
+    <string name="batch_number">batch no:</string>
+    <string name="voucher_numbe">voucher no:</string>
+    <string name="date_time">date/time:</string>
+
+    <string name="reference_number">reference no:</string>
+    <string name="remark">remark:</string>
+    <string name="user_signature">user signature</string>
+
+    <string name="card_no">cardNo:</string>
+    <string name="authorization_code">auth code:</string>
+
+    <string name="printing">printing...</string>
+    <string name="no_print">no print</string>
+    <string name="open_cash_box_succ">open cash box succ</string>
+    <string name="open_cash_box">opening cash box...</string>
+    <string name="print_fail">print fail</string>
+    <string name="print_succ">print succ</string>
+    <string name="scaning">scaning</string>
+    <string name="scan_succ">scan succ</string>
+    <string name="scan_fail">scan fail</string>
+
+    <string name="i_confirm">I confirm that the above deal, agreed to the plan into the card account</string>
+    <string name="post_ype">pos type</string>
+    <string name="setting">Setting</string>
+    <string name="please_select_a_device_type">please select a device type</string>
+
+    <string name="cancel_the_default_pos_device">cancel the default pos device</string>
+    <string name="cancel_the_default_print_device">cancel the default print device</string>
+    <string name="default_device">default device</string>
+    <string name="current_type">current mode:</string>
+
+    <string name="submit">submit</string>
+    <string name="name">name</string>
+    <string name="barcode">barcode</string>
+    <string name="price">price</string>
+</resources>
