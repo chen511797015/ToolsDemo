@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/ToolsDemo.iml" filepath="$PROJECT_DIR$/ToolsDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/api/api.iml" filepath="$PROJECT_DIR$/api/api.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/printer/printer.iml" filepath="$PROJECT_DIR$/printer/printer.iml" />
       <module fileurl="file://$PROJECT_DIR$/printertest/printertest.iml" filepath="$PROJECT_DIR$/printertest/printertest.iml" />
       <module fileurl="file://$PROJECT_DIR$/screenadapter/screenadapter.iml" filepath="$PROJECT_DIR$/screenadapter/screenadapter.iml" />
     </modules>

@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.pax.printertest">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pax.printertest">
 
-    <application android:allowBackup="true" android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name" android:supportsRtl="true" android:theme="@style/AppTheme">
+
+    <!-- 获取usb权限 -->
+    <uses-feature android:name="android.hardware.usb.host" />
+    <uses-permission android:name="android.hardware.usb.accessory" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

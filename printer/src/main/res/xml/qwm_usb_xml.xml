@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <usb-device
+        product-id="5678"
+        vendor-id="1234" />
+    <usb-device
+        product-id="22304"
+        vendor-id="1155" />
+    <usb-device
+        product-id="649"
+        vendor-id="10473" />
+
+    <usb-device
+        product-id="30017"
+        vendor-id="1157" />
+</resources>
+
+    <!--
+    参数说明：
+    vendor-id  （VID）：产商id
+    product-id （PID）：产品id
+    class             ：类
+    subclass          ：子类
+    protocol          ：协议
+    -->

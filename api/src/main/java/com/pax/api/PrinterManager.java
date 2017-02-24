@@ -29,6 +29,7 @@ public class PrinterManager {
         }
     }
 
+
     public void prnSetGray(int level) throws Exception {
         mPrinterUtil.writeData(PrinterConstants.setPrinterConcentration(level));
     }
@@ -39,8 +40,8 @@ public class PrinterManager {
      * @return
      */
     public byte prnStatus() throws Exception {
-//        byte[] ret = new byte[]{0x1d, 0x67, 0x31};
-//        int readData = mPrinterUtil.readData(ret);
+        byte[] ret = new byte[]{0x1d, 0x61, 0x31};
+        int readData = mPrinterUtil.readData(ret);
         return 0;
 
     }

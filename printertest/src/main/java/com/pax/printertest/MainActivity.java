@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
-import HPRTAndroidSDK.HPRTPrinterHelper;
-import HPRTAndroidSDK.USBOperator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -88,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_print:
-                WindowManager windowManager = getWindowManager();
-                Display display = windowManager.getDefaultDisplay();
-                int screenWidth = display.getWidth();
-                int screenHeight = display.getHeight();
-                Log.i("iii", "屏幕宽度---" + screenWidth);
-                Log.i("iii", "屏幕高度---" + screenHeight);
+//                WindowManager windowManager = getWindowManager();
+//                Display display = windowManager.getDefaultDisplay();
+//                int screenWidth = display.getWidth();
+//                int screenHeight = display.getHeight();
+//                Log.i("iii", "屏幕宽度---" + screenWidth);
+//                Log.i("iii", "屏幕高度---" + screenHeight);
                 new Thread() {
                     @Override
                     public void run() {
@@ -121,8 +119,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Log.e(TAG, "run: " + Thread.currentThread().getName());
-                final Bitmap bmp = PrintUtil.getViewBitmap(MainActivity.this, sl);
-                HPRTPrinterHelper.PrintBitmap(bmp, (byte) 0, (byte) 0);
+//                final Bitmap bmp = PrintUtil.getViewBitmap(MainActivity.this, sl);
+//                HPRTPrinterHelper.PrintBitmap(bmp, (byte) 0, (byte) 0);
+                try {
+                    mPrinterManager.prnStatus();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }.start();
 
@@ -132,15 +135,10 @@ public class MainActivity extends AppCompatActivity {
         try {
             Log.e(TAG, "开始打印...");
             mPrinterManager = PrinterManager.getInstance(this);
-            mPrinterManager.prnInit();
-//            new byte[]{0x1b, 0x23, 0x23, 0x43, 0x54, 0x46, 0x44, 0x78, 0x00}
-//            1B 23 23 53 54 44 50 n
-            //mPrinterManager.prnBytes(new byte[]{0x1b, 0x23, 0x23, 0x53, 0x54, 0x44, 0x50, 0xf});
+            //mPrinterManager.prnInit();
             Thread.sleep(1000);
             mPrinterManager.prnBitmap(bitmap);
-            //mPrinterManager.prnStr("print test...");
             mPrinterManager.prnStartCut(1);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

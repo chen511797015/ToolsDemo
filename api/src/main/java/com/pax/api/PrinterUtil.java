@@ -27,7 +27,7 @@ public class PrinterUtil implements PrinterInterface {
         if (null == mUsbAdmin) {
             mUsbAdmin = new UsbAdmin(mContext);
         }
-        mUsbAdmin.OpenPort("USB_PRINTER");
+        mUsbAdmin.OpenPort("");
     }
 
 
