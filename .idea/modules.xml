@@ -3,11 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ToolsDemo.iml" filepath="$PROJECT_DIR$/ToolsDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/animation/animation.iml" filepath="$PROJECT_DIR$/animation/animation.iml" />
       <module fileurl="file://$PROJECT_DIR$/api/api.iml" filepath="$PROJECT_DIR$/api/api.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/printer/printer.iml" filepath="$PROJECT_DIR$/printer/printer.iml" />
       <module fileurl="file://$PROJECT_DIR$/printertest/printertest.iml" filepath="$PROJECT_DIR$/printertest/printertest.iml" />
       <module fileurl="file://$PROJECT_DIR$/screenadapter/screenadapter.iml" filepath="$PROJECT_DIR$/screenadapter/screenadapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/touch/touch.iml" filepath="$PROJECT_DIR$/touch/touch.iml" />
     </modules>
   </component>
 </project>

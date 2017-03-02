@@ -9,11 +9,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/animation" />
             <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/printer" />
             <option value="$PROJECT_DIR$/printertest" />
             <option value="$PROJECT_DIR$/screenadapter" />
+            <option value="$PROJECT_DIR$/touch" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
